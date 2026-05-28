@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-cream: #F5F5DC;
+  --color-brand-gold: #D4AF37;
+  --color-brand-wood: #8B4513;
+  --color-brand-leaf: #2D5A27;
+  --color-brand-white: #FFFFFF;
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-accent: "Great Vibes", cursive;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream text-brand-wood font-sans overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+  
+  .font-accent {
+    font-family: "Great Vibes", cursive;
+  }
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.megamendung-bg {
+  background-image: url('/images/pattern-megamendung.png');
+  background-repeat: repeat;
+  background-size: 300px;
+  opacity: 0.05;
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
