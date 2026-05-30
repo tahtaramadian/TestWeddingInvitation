@@ -280,7 +280,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      <audio ref={audioRef} loop src="/music/Kacapi_Suling_sunda.mp3" />
+      <audio ref={audioRef} loop src="/music/Kacapi_Suling_sunda(1).mp3" />
       
       <AnimatePresence>
         {!isOpen && <Opening onOpen={handleOpen} guestName={guestName} />}
