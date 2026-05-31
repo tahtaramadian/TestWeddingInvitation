@@ -232,20 +232,26 @@ export default function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);  
     setGuestName(params.get('to') || '');
+    if (audioRef.current) {
+    audioRef.current.volume = 1;
+    audioRef.current.muted = false;
+    }
 
   }, []);
 
-  const handleOpen = async () => {
-  setIsOpen(true);
 
+  const handleOpen = async () => {
   try {
     if (audioRef.current) {
       await audioRef.current.play();
+      console.log("PLAY SUCCESS");
       setIsPlaying(true);
     }
   } catch (err) {
-    console.error('Audio play failed:', err);
+    console.error("PLAY FAILED", err);
   }
+
+  setIsOpen(true);
 };
 
   const toggleMusic = () => {
@@ -285,7 +291,16 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-    <audio ref={audioRef}loop preload="auto" src="/music/Kacapi_Suling_sunda.mp3" onPlay={() => console.log('Audio started')}onError={(e) => console.log('Audio error', e)}/>
+   <audio
+  ref={audioRef}
+  loop
+  preload="auto"
+  src="/music/Kacapi_Suling_sunda.mp3"
+  onLoadedData={() => console.log("Audio loaded")}
+  onCanPlay={() => console.log("Audio can play")}
+  onPlay={() => console.log("Audio playing")}
+  onError={(e) => console.log("Audio error", e)}
+/>
       
       <AnimatePresence>
         {!isOpen && <Opening onOpen={handleOpen} guestName={guestName} />}
