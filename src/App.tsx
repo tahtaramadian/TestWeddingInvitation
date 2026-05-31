@@ -235,13 +235,18 @@ export default function App() {
 
   }, []);
 
-  const handleOpen = () => {
-    setIsOpen(true);
-    setIsPlaying(true);
+  const handleOpen = async () => {
+  setIsOpen(true);
+
+  try {
     if (audioRef.current) {
-      audioRef.current.play();
+      await audioRef.current.play();
+      setIsPlaying(true);
     }
-  };
+  } catch (err) {
+    console.error('Audio play failed:', err);
+  }
+};
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -280,7 +285,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      <audio ref={audioRef} loop src="/music/Kacapi_Suling_sunda(1).mp3" />
+    <audio ref={audioRef}loop preload="auto" src="/music/Kacapi_Suling_sunda.mp3" onPlay={() => console.log('Audio started')}onError={(e) => console.log('Audio error', e)}/>
       
       <AnimatePresence>
         {!isOpen && <Opening onOpen={handleOpen} guestName={guestName} />}
