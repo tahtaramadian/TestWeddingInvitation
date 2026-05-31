@@ -5,6 +5,7 @@ import { weddingData } from './data/weddingData';
 import { format, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns';
 import confetti from 'canvas-confetti';
 import type { RSVP } from './types/index';
+import FallingFlowers from "./components/FallingFlowers";
 const GOOGLE_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycby4_FkG6ePryyLV6R8U2xTEGVjrBQ6RIj_l-cMdPbW6OPXl2t1AiemWeqZPXs6hDZFuFw/exec';
 
@@ -321,45 +322,105 @@ export default function App() {
           </button>
 
           {/* Hero Section */}
-          <section className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
-            <div className="absolute inset-0 scale-110">
-              <img src="/images/hero.jpg" alt="Hero" className="w-full h-full object-cover filter brightness-50" />
-            </div>
-            <div className="relative z-10 text-white">
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="uppercase tracking-[0.3em] mb-4 text-sm md:text-base"
-              >
-                The Wedding Celebration of
-              </motion.p>
-              <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="font-accent text-7xl md:text-9xl mb-8 text-brand-gold"
-              >
-                {weddingData.groom.name} & {weddingData.bride.name}
-              </motion.h1>
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                <Countdown targetDate={weddingData.event.date} />
-              </motion.div>
-            </div>
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
-              <div className="w-px h-16 bg-gradient-to-b from-white to-transparent" />
-            </div>
-          </section>
+         <section className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+
+  {/* Background Hero */}
+  <motion.div
+    className="absolute inset-0"
+    initial={{ scale: 1.1 }}
+    animate={{ scale: 1 }}
+    transition={{
+      duration: 20,
+      repeat: Infinity,
+      repeatType: "reverse",
+    }}
+  >
+    <img
+      src="/images/hero.jpg"
+      alt="Hero"
+      className="w-full h-full object-cover brightness-50"
+    />
+  </motion.div>
+
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-black/30" />
+
+  {/* Animasi Daun & Bunga */}
+  <FallingFlowers />
+
+  {/* Ornamen kiri */}
+  <img
+    src="/images/megamendung.png"
+    className="absolute left-0 top-0 h-full opacity-10"
+    alt=""
+  />
+
+  {/* Ornamen kanan */}
+  <img
+    src="/images/megamendung.png"
+    className="absolute right-0 top-0 h-full opacity-10 scale-x-[-1]"
+    alt=""
+  />
+
+  {/* Content */}
+  <div className="relative z-20 text-white">
+    <motion.p
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      className="uppercase tracking-[0.3em] mb-4 text-sm md:text-base"
+    >
+      The Wedding Celebration of
+    </motion.p>
+
+    <motion.h1
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2 }}
+      className="font-accent text-7xl md:text-9xl mb-8 text-brand-gold"
+    >
+      {weddingData.groom.name} & {weddingData.bride.name}
+    </motion.h1>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ delay: 0.4 }}
+    >
+      <Countdown targetDate={weddingData.event.date} />
+    </motion.div>
+  </div>
+  <div className="absolute inset-0 pointer-events-none">
+  {Array.from({ length: 40 }).map((_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-1 h-1 rounded-full bg-yellow-300"
+      style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+      }}
+      animate={{
+        opacity: [0.2, 1, 0.2],
+        scale: [1, 2, 1],
+      }}
+      transition={{
+        duration: 2 + Math.random() * 3,
+        repeat: Infinity,
+      }}
+    />
+  ))}
+</div>
+
+</section>
 
           {/* Quotes Section */}
           <section className="py-24 px-6 bg-white relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="mb-8 flex justify-center">
-                <img src="/images/pattern-megamendung.png" className="w-24 opacity-20" alt="pattern" />
-              </div>
+              <div className="absolute inset-0 opacity-10">
+  <img
+    src="/images/pattern-megamendung.png"
+    className="w-full h-full object-cover"
+  />
+</div>
               <p className="text-lg md:text-xl text-brand-wood leading-relaxed italic">
                 "Ar-Rum: 21 - Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
               </p>
